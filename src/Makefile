@@ -156,10 +156,9 @@ SRCDIRS		+=	arch/$(ARCH)/lib/cpu						\
 				driver/watchdog								\
 				framework									\
 				framework/codec								\
-				framework/display							\
-				framework/event								\
+				framework/core								\
+				framework/graphic							\
 				framework/hardware							\
-				framework/lang								\
 				framework/stopwatch
 
 #

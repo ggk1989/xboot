@@ -1,5 +1,5 @@
 /*
- * framework/event/l-event.c
+ * framework/core/l-event.c
  *
  * Copyright(c) 2007-2018 Jianjun Jiang <8192542@qq.com>
  * Official site: http://xboot.org
@@ -27,7 +27,7 @@
  */
 
 #include <input/input.h>
-#include <framework/event/l-event.h>
+#include <framework/core/l-event.h>
 
 #define EVT_KEY_DOWN				"KeyDown"
 #define EVT_KEY_UP					"KeyUp"

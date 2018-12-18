@@ -1,5 +1,5 @@
 /*
- * framework/lang/l-class.c
+ * framework/core/l-class.c
  *
  * Copyright(c) 2007-2018 Jianjun Jiang <8192542@qq.com>
  * Official site: http://xboot.org
@@ -26,7 +26,7 @@
  *
  */
 
-#include <framework/lang/l-class.h>
+#include <framework/core/l-class.h>
 
 static const char class_lua[] = X(
 local function rethack(t, bbak, mbak, ...)

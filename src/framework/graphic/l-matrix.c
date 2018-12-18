@@ -1,5 +1,5 @@
 /*
- * framework/display/l-matrix.c
+ * framework/graphic/l-matrix.c
  *
  * Copyright(c) 2007-2018 Jianjun Jiang <8192542@qq.com>
  * Official site: http://xboot.org
@@ -26,9 +26,8 @@
  *
  */
 
-#include <cairo.h>
-#include <cairoint.h>
-#include <framework/display/l-display.h>
+#include <xboot.h>
+#include <framework/graphic/l-graphic.h>
 
 static int l_matrix_new(lua_State * L)
 {

@@ -1,5 +1,5 @@
 /*
- * framework/display/l-pattern.c
+ * framework/graphic/l-pattern.c
  *
  * Copyright(c) 2007-2018 Jianjun Jiang <8192542@qq.com>
  * Official site: http://xboot.org
@@ -26,8 +26,8 @@
  *
  */
 
-#include <cairo.h>
-#include <framework/display/l-display.h>
+#include <xboot.h>
+#include <framework/graphic/l-graphic.h>
 
 static int l_pattern_create_color(lua_State * L)
 {
@@ -41,11 +41,11 @@ static int l_pattern_create_color(lua_State * L)
 	return 1;
 }
 
-static int l_pattern_create_texture(lua_State * L)
+static int l_pattern_create_image(lua_State * L)
 {
-	struct ltexture_t * texture = luaL_checkudata(L, 1, MT_TEXTURE);
+	struct limage_t * image = luaL_checkudata(L, 1, MT_IMAGE);
 	struct lpattern_t * pattern = lua_newuserdata(L, sizeof(struct lpattern_t));
-	pattern->pattern = cairo_pattern_create_for_surface(texture->surface);
+	pattern->pattern = cairo_pattern_create_for_surface(image->surface);
 	luaL_setmetatable(L, MT_PATTERN);
 	return 1;
 }
@@ -78,7 +78,7 @@ static int l_pattern_create_radial(lua_State * L)
 
 static const luaL_Reg l_pattern[] = {
 	{"color",	l_pattern_create_color},
-	{"texture",	l_pattern_create_texture},
+	{"image",	l_pattern_create_image},
 	{"linear",	l_pattern_create_linear},
 	{"radial",	l_pattern_create_radial},
 	{NULL,		NULL}

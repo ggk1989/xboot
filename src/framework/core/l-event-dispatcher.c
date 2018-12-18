@@ -1,5 +1,5 @@
 /*
- * framework/event/l-event-dispatcher.c
+ * framework/core/l-event-dispatcher.c
  *
  * Copyright(c) 2007-2018 Jianjun Jiang <8192542@qq.com>
  * Official site: http://xboot.org
@@ -26,7 +26,7 @@
  *
  */
 
-#include <framework/event/l-event-dispatcher.h>
+#include <framework/core/l-event-dispatcher.h>
 
 static const char event_dispatcher_lua[] = X(
 local M = Class()
@@ -53,6 +53,7 @@ end
 
 function M:addEventListener(type, listener, data)
 	local data = data or self
+	local table = table
 
 	if self:hasEventListener(type, listener, data) then
 		return self
@@ -70,9 +71,9 @@ function M:addEventListener(type, listener, data)
 end
 
 function M:removeEventListener(type, listener, data)
-	local table = table
-	local data = data or self
 	local els = self.eventListenersMap[type]
+	local data = data or self
+	local table = table
 
 	if not els or #els == 0 then
 		return self

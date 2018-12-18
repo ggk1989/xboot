@@ -1,5 +1,5 @@
 /*
- * framework/display/l-texture.c
+ * framework/graphic/l-image.c
  *
  * Copyright(c) 2007-2018 Jianjun Jiang <8192542@qq.com>
  * Official site: http://xboot.org
@@ -26,10 +26,8 @@
  *
  */
 
-#include <cairo.h>
-#include <cairoint.h>
-#include <xfs/xfs.h>
-#include <framework/display/l-display.h>
+#include <xboot.h>
+#include <framework/graphic/l-graphic.h>
 
 static cairo_status_t xfs_read_func(void * closure, unsigned char * data, unsigned int size)
 {
@@ -64,66 +62,66 @@ static cairo_surface_t * cairo_image_surface_create_from_png_xfs(lua_State * L, 
     return surface;
 }
 
-static int l_texture_new(lua_State * L)
+static int l_image_new(lua_State * L)
 {
 	const char * filename = luaL_checkstring(L, 1);
-	struct ltexture_t * texture = lua_newuserdata(L, sizeof(struct ltexture_t));
-	texture->surface = cairo_image_surface_create_from_png_xfs(L, filename);
-	if(cairo_surface_status(texture->surface) != CAIRO_STATUS_SUCCESS)
+	struct limage_t * image = lua_newuserdata(L, sizeof(struct limage_t));
+	image->surface = cairo_image_surface_create_from_png_xfs(L, filename);
+	if(cairo_surface_status(image->surface) != CAIRO_STATUS_SUCCESS)
 		return 0;
-	luaL_setmetatable(L, MT_TEXTURE);
+	luaL_setmetatable(L, MT_IMAGE);
 	return 1;
 }
 
-static const luaL_Reg l_texture[] = {
-	{"new",	l_texture_new},
+static const luaL_Reg l_image[] = {
+	{"new",	l_image_new},
 	{NULL,	NULL}
 };
 
-static int m_texture_gc(lua_State * L)
+static int m_image_gc(lua_State * L)
 {
-	struct ltexture_t * texture = luaL_checkudata(L, 1, MT_TEXTURE);
-	cairo_surface_destroy(texture->surface);
+	struct limage_t * img = luaL_checkudata(L, 1, MT_IMAGE);
+	cairo_surface_destroy(img->surface);
 	return 0;
 }
 
-static int m_texture_size(lua_State * L)
+static int m_image_size(lua_State * L)
 {
-	struct ltexture_t * texture = luaL_checkudata(L, 1, MT_TEXTURE);
-	int w = cairo_image_surface_get_width(texture->surface);
-	int h = cairo_image_surface_get_height(texture->surface);
+	struct limage_t * img = luaL_checkudata(L, 1, MT_IMAGE);
+	int w = cairo_image_surface_get_width(img->surface);
+	int h = cairo_image_surface_get_height(img->surface);
 	lua_pushnumber(L, w);
 	lua_pushnumber(L, h);
 	return 2;
 }
 
-static int m_texture_region(lua_State * L)
+static int m_image_region(lua_State * L)
 {
-	struct ltexture_t * texture = luaL_checkudata(L, 1, MT_TEXTURE);
+	struct limage_t * img = luaL_checkudata(L, 1, MT_IMAGE);
 	int x = luaL_optinteger(L, 2, 0);
 	int y = luaL_optinteger(L, 3, 0);
-	int w = luaL_optinteger(L, 4, cairo_image_surface_get_width(texture->surface));
-	int h = luaL_optinteger(L, 5, cairo_image_surface_get_height(texture->surface));
-	struct ltexture_t * tex = lua_newuserdata(L, sizeof(struct ltexture_t));
-	tex->surface = cairo_surface_create_similar(texture->surface, cairo_surface_get_content(texture->surface), w, h);
-	cairo_t * cr = cairo_create(tex->surface);
-	cairo_set_source_surface(cr, texture->surface, -x, -y);
+	int w = luaL_optinteger(L, 4, cairo_image_surface_get_width(img->surface));
+	int h = luaL_optinteger(L, 5, cairo_image_surface_get_height(img->surface));
+	struct limage_t * subimg = lua_newuserdata(L, sizeof(struct limage_t));
+	subimg->surface = cairo_surface_create_similar(img->surface, cairo_surface_get_content(img->surface), w, h);
+	cairo_t * cr = cairo_create(subimg->surface);
+	cairo_set_source_surface(cr, img->surface, -x, -y);
 	cairo_paint(cr);
 	cairo_destroy(cr);
-	luaL_setmetatable(L, MT_TEXTURE);
+	luaL_setmetatable(L, MT_IMAGE);
 	return 1;
 }
 
-static const luaL_Reg m_texture[] = {
-	{"__gc",		m_texture_gc},
-	{"size",		m_texture_size},
-	{"region",		m_texture_region},
+static const luaL_Reg m_image[] = {
+	{"__gc",		m_image_gc},
+	{"size",		m_image_size},
+	{"region",		m_image_region},
 	{NULL,			NULL}
 };
 
-int luaopen_texture(lua_State * L)
+int luaopen_image(lua_State * L)
 {
-	luaL_newlib(L, l_texture);
-	luahelper_create_metatable(L, MT_TEXTURE, m_texture);
+	luaL_newlib(L, l_image);
+	luahelper_create_metatable(L, MT_IMAGE, m_image);
 	return 1;
 }

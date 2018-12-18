@@ -1,5 +1,5 @@
 /*
- * framework/display/l-shape.c
+ * framework/graphic/l-shape.c
  *
  * Copyright(c) 2007-2018 Jianjun Jiang <8192542@qq.com>
  * Official site: http://xboot.org
@@ -26,8 +26,8 @@
  *
  */
 
-#include <cairo.h>
-#include <framework/display/l-display.h>
+#include <xboot.h>
+#include <framework/graphic/l-graphic.h>
 
 static int l_shape_new(lua_State * L)
 {

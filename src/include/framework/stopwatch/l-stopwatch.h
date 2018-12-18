@@ -1,5 +1,5 @@
-#ifndef __FRAMEWORK_L_STOPWATCH_H__
-#define __FRAMEWORK_L_STOPWATCH_H__
+#ifndef __FRAMEWORK_STOPWATCH_L_STOPWATCH_H__
+#define __FRAMEWORK_STOPWATCH_L_STOPWATCH_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -7,7 +7,7 @@ extern "C" {
 
 #include <framework/luahelper.h>
 
-#define	MT_STOPWATCH	"mt_stopwatch"
+#define	MT_STOPWATCH	"__mt_stopwatch__"
 
 int luaopen_stopwatch(lua_State * L);
 
@@ -15,4 +15,4 @@ int luaopen_stopwatch(lua_State * L);
 }
 #endif
 
-#endif /* __FRAMEWORK_L_STOPWATCH_H__ */
+#endif /* __FRAMEWORK_STOPWATCH_L_STOPWATCH_H__ */

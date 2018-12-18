@@ -1,5 +1,5 @@
 /*
- * framework/display/l-ninepatch.c
+ * framework/graphic/l-ninepatch.c
  *
  * Copyright(c) 2007-2018 Jianjun Jiang <8192542@qq.com>
  * Official site: http://xboot.org
@@ -26,10 +26,8 @@
  *
  */
 
-#include <cairo.h>
-#include <cairoint.h>
-#include <xfs/xfs.h>
-#include <framework/display/l-display.h>
+#include <xboot.h>
+#include <framework/graphic/l-graphic.h>
 
 static cairo_status_t xfs_read_func(void * closure, unsigned char * data, unsigned int size)
 {
